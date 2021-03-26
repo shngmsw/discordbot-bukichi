@@ -57,7 +57,7 @@ function call(msg) {
     case `${prefix}show`:
       handleShow(msg, args[0]);
       break;
-    case `${refix}help`:
+    case `${prefix}help`:
       handleHelp(msg);
       break;
     case `${prefix}fc`:
