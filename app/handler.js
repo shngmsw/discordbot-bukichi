@@ -13,7 +13,7 @@ const handleVoicePick = require("./vpick.js");
 const handleWiki = require("./wiki.js");
 const conf = require('config-reloadable');
 let config = conf();
-
+let prefix = "!!"
 prefix = config.get('Prefix');
 
 module.exports = {
