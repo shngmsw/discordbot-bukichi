@@ -23,7 +23,7 @@ const modeList1 = {
 let context;
 let discordToken = null;
 let voiceTextApiKey = null;
-let prefix = '/';
+let prefix = '!!';
 let autoRestart = true;
 let readMe = false;
 let apiType = 1;
@@ -53,14 +53,6 @@ const readConfig = () => {
     return true;
 };
 
-// const autoRestartFunc = () => {
-//     //console.log(`${timeout}秒後に再接続処理開始`);
-//     setTimeout(() => {
-//         discordLogin();
-//     }, timeout * 1000);
-//     timeout *= 2;
-// };
-
 const voiceChanelJoin = async (channelId) => {
     channelHistory = channelId;
     await channelId.join()
@@ -74,35 +66,6 @@ const voiceChanelJoin = async (channelId) => {
     return true;
 };
 
-// const onErrorListen = (error) => {
-//     if (context && context.status !== 4) context.disconnect();
-//     // client.destroy();
-//     console.error(error.name);
-//     console.error(error.message);
-//     console.error(error.code);
-//     console.error(error);
-//     if (client.status != null) {
-//         message.user.send(error, {code: true});
-//     } else {
-//         console.error('NOT CONNECT');
-//         if (error.code === 'TOKEN_INVALID') process.exit(1);
-//         autoRestart ? autoRestartFunc() : process.exit(1);
-//     }
-// };
-
-// const discordLogin = async () => {
-//     //console.log('DiscordBotログイン処理を実行');
-//     await client.login(discordToken); //Discord login token
-//     //console.log('DiscordBotログイン処理を完了');
-//     //console.log('ボイスチャンネルへの接続を試行');
-//     if (channelHistory && await voiceChanelJoin(channelHistory)) {
-//         //console.log('ボイスチャンネルへ再接続成功');
-//     } else {
-//         //console.log('直前に接続していたボイスチャンネル無し');
-//     }
-//     timeout = timeoutOffset;
-// };
-
 readConfig();
 let voicePattern1 = voiceType; //初期時のよみあげ音声
 let mode = apiType;
@@ -112,15 +75,6 @@ let readChannelId = null;
 module.exports = {
     main: main
 };
-// discordLogin();
-
-// process.on('uncaughtException', onErrorListen);
-
-// process.on('unhandledRejection', onErrorListen);
-
-// client.on('ready', () => {
-//     //console.log('Bot準備完了');
-// });
 
 async function main(message) {
     if (!message.guild) return;

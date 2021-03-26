@@ -11,6 +11,10 @@ const handleSub = require("./sub.js");
 const handleTimer = require("./timer.js");
 const handleVoicePick = require("./vpick.js");
 const handleWiki = require("./wiki.js");
+const conf = require('config-reloadable');
+let config = conf();
+
+prefix = config.get('Prefix');
 
 module.exports = {
   call: call
@@ -22,45 +26,45 @@ function call(msg) {
   const command = args.shift().toLowerCase();
 
   switch (command) {
-    case "wiki":
+    case `${prefix}wiki`:
       handleWiki(msg, args[0]);
       break;
-    case "kansen":
+    case `${prefix}kansen`:
       handleKansen(msg, args[0]);
       break;
-    case "timer":
+    case `${prefix}timer`:
       handleTimer(msg, args[0]);
       break;
-    case "pick":
+    case `${prefix}pick`:
       handlePick(msg);
       break;
-    case "vpick":
+    case `${prefix}vpick`:
       handleVoicePick(msg);
       break;
-    case "rule":
+    case `${prefix}rule`:
       handleRule(msg);
       break;
-    case "sub":
+    case `${prefix}sub`:
       handleSub(msg);
       break;
-    case "special":
+    case `${prefix}special`:
       handleSpecial(msg);
       break;
-    case "buki":
-    case "weapon":
+    case `${prefix}buki`:
+    case `${prefix}weapon`:
       handleBuki(command, msg);
       break;
-    case "show":
+    case `${prefix}show`:
       handleShow(msg, args[0]);
       break;
-    case "!!help":
+    case `${refix}help`:
       handleHelp(msg);
       break;
-    case "fc":
-    case "fcadd":
+    case `${prefix}fc`:
+    case `${prefix}fcadd`:
       handleFriendCode(msg);
       break;
-    case "stageall":
+    case `${prefix}stageall`:
       handleStageInfo(msg);
       break;
   }
