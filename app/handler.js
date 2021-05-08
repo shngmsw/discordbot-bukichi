@@ -12,9 +12,6 @@ const handleTimer = require("./timer.js");
 const handleVoicePick = require("./vpick.js");
 const handleWiki = require("./wiki.js");
 const conf = require('config-reloadable');
-let config = conf();
-let prefix = "!!"
-prefix = config.get('Prefix');
 
 module.exports = {
   call: call
@@ -24,6 +21,7 @@ function call(msg) {
   var strCmd = msg.content.replace(/　/g, " ");
   const args = strCmd.split(" ");
   const command = args.shift().toLowerCase();
+  const prefix = await common.getPrefix(msg.guild.id);
 
   switch (command) {
     case `${prefix}wiki`:
@@ -66,6 +64,9 @@ function call(msg) {
       break;
     case `${prefix}stageall`:
       handleStageInfo(msg);
+      break;
+    case `${prefix}prefix`:
+      handlePrefix(msg);
       break;
   }
 }

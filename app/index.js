@@ -15,7 +15,7 @@ client.on("message", async (msg) => {
 client.on("ready", message => {
   bot.user.setPresence({
     game: {
-      name: '!help',
+      name: '!!help',
       type: "STREAMING",
     }
   });

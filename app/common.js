@@ -9,7 +9,8 @@ module.exports = {
   coop_stage2txt: coop_stage2txt,
   weapon2txt: weapon2txt,
   rgbToHex: rgbToHex,
-  random: randomSelect
+  random: randomSelect,
+  getPrefix: getPrefix
 }
 
 function rgbToHex (r, g, b){
@@ -430,3 +431,12 @@ function randomSelect(array, num) {
     }
     return r;
 };
+
+async function getPrefix(serverId) {
+    let prefix = DEFAULT_PREFIX;
+    const serverPrefix = await getPrefixes(serverId);
+    if (serverPrefix[0] != null) {
+        prefix = serverPrefix[0].prefix;
+    }
+    return prefix;
+}
