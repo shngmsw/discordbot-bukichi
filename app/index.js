@@ -13,11 +13,5 @@ client.on("message", async (msg) => {
 });
 
 client.on("ready", message => {
-  bot.user.setPresence({
-    game: {
-      name: '!!help',
-      type: "STREAMING",
-    }
-  });
   console.log(`Logged in as ${client.user.tag}!`);
 });

@@ -11,17 +11,19 @@ const handleSub = require("./sub.js");
 const handleTimer = require("./timer.js");
 const handleVoicePick = require("./vpick.js");
 const handleWiki = require("./wiki.js");
+const handlePrefix = require("./prefix.js");
+const common = require("./common.js");
 const conf = require('config-reloadable');
 
 module.exports = {
   call: call
 };
 
-function call(msg) {
+async function call(msg) {
   var strCmd = msg.content.replace(/　/g, " ");
   const args = strCmd.split(" ");
-  const command = args.shift().toLowerCase();
   const prefix = await common.getPrefix(msg.guild.id);
+  const command = args.shift().toLowerCase();  
 
   switch (command) {
     case `${prefix}wiki`:
@@ -50,7 +52,7 @@ function call(msg) {
       break;
     case `${prefix}buki`:
     case `${prefix}weapon`:
-      handleBuki(command, msg);
+      handleBuki(command.replace(prefix, ''), msg);
       break;
     case `${prefix}show`:
       handleShow(msg, args[0]);

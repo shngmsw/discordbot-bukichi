@@ -12,6 +12,8 @@ module.exports = {
   random: randomSelect,
   getPrefix: getPrefix
 }
+const getPrefixes = require('../db/prefixes_select.js');
+const DEFAULT_PREFIX = '!!';
 
 function rgbToHex (r, g, b){
   [r, g, b]
