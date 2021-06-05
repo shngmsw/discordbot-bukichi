@@ -107,7 +107,7 @@ module.exports = function handleShow(msg, args) {
                         }
                     }
                 });
-            } else if (msg.content === "show run") {
+            } else if (msg.content === "run") {
                 request.get("https://splatoon2.ink/data/coop-schedules.json", function (
                     error,
                     response,
@@ -125,10 +125,10 @@ module.exports = function handleShow(msg, args) {
                         const coop_stage =
                             common.coop_stage2txt(data.details[0].stage.image) + "\n";
                         const weapons = common.weapon2txt(data.details[0].weapons[0].id) + "・" +
-                        common.weapon2txt(data.details[0].weapons[1].id) + "・" +
-                        common.weapon2txt(data.details[0].weapons[2].id) + "・" +
-                        common.weapon2txt(data.details[0].weapons[3].id);
-                        
+                            common.weapon2txt(data.details[0].weapons[1].id) + "・" +
+                            common.weapon2txt(data.details[0].weapons[2].id) + "・" +
+                            common.weapon2txt(data.details[0].weapons[3].id);
+
                         msg.channel.send("", {
                             embed: {
                                 author: {
