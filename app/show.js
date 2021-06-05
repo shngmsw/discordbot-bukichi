@@ -107,7 +107,7 @@ module.exports = function handleShow(msg, args) {
                         }
                     }
                 });
-            } else if (msg.content === "run") {
+            } else if (args == "run") {
                 request.get("https://splatoon2.ink/data/coop-schedules.json", function (
                     error,
                     response,
