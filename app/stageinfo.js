@@ -3,14 +3,10 @@ const common = require("./common.js");
 const Discord = require("discord.js");
 
 module.exports = function handleStageInfo(msg) {
-    if (msg.content.startsWith("stageinfo")) {
-        stageinfo(msg);
-    } else if (msg.content.startsWith("stage")) {
-        sf(msg);
-    }
+    sf(msg);
 }
+
 function sf(msg) {
-
     request.get("https://splatoon2.ink/data/schedules.json", function (
         error,
         response,
@@ -46,45 +42,6 @@ function sf(msg) {
     });
 }
 
-function stageinfo(msg) {
-    // 過去分は削除
-    msgDelete(msg);
-
-    request.get("https://splatoon2.ink/data/schedules.json", function (
-        error,
-        response,
-        body
-    ) {
-        if (!error && response.statusCode == 200) {
-            const data = JSON.parse(body);
-            const embedStr = getEmbed(data.league);
-            embedStr.setAuthor(
-                "リーグマッチ",
-                "https://cdn.glitch.com/4ea6ca87-8ea7-482c-ab74-7aee445ea445%2Fleague.png",
-                "https://splatoon2.ink"
-            );
-            embedStr.setImage(
-                "https://cdn.glitch.com/4ea6ca87-8ea7-482c-ab74-7aee445ea445%2Fleague.png"
-            );
-            embedStr.setColor("#ED2D7C");
-            msg.channel.send(embedStr);
-            const embedStr_gachi = getEmbed(data.gachi);
-            embedStr_gachi.setAuthor(
-                "ガチマッチ",
-                "https://cdn.glitch.com/4ea6ca87-8ea7-482c-ab74-7aee445ea445%2Fgachi.png",
-                "https://splatoon2.ink"
-            );
-            embedStr_gachi.setImage(
-                "https://cdn.glitch.com/4ea6ca87-8ea7-482c-ab74-7aee445ea445%2Fgachi.png"
-            );
-            embedStr_gachi.setColor("#F54910");
-            msg.channel.send(embedStr_gachi);
-        } else {
-            msg.channel.send("なんかエラーでてるわ");
-            console.log("なんかエラーでてるわ");
-        }
-    });
-}
 
 function getEmbed(data) {
     let x = 0;
@@ -115,11 +72,4 @@ function getEmbed(data) {
     stageEmbed.setTimestamp();
     stageEmbed.setFooter("StageInfo by splatoon2.ink");
     return stageEmbed;
-}
-
-async function msgDelete(message) {
-    // コマンドが送信されたチャンネルから直近100件(上限)メッセージを取得する
-    const messages = await message.channel.messages.fetch({ limit: 100 })
-    // それらのメッセージを一括削除
-    message.channel.bulkDelete(messages)
 }
