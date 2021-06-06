@@ -4,19 +4,19 @@ module.exports = async function handleHelp(msg) {
     var strCmd = msg.content.replace(/　/g, ' ');
     strCmd = strCmd.replace('  ', ' ');
     const args = strCmd.split(' ');
-    const prefix = await common.getPrefix(msg.guild.id);
+    const prefix = await common.getPrefix(msg);
     const helpValuePrefix = prefix + "prefix [newPrefix]";
     args.shift();
     if (args[0] == 'voice') {
         msg.channel.send('', {
             embed: {
                 author: {
-                    name: 'ブキチの使い方(読み上げbot)',
+                    name: 'Sheldonの使い方(読み上げbot)',
                     icon_url: 'https://cdn.glitch.com/4ea6ca87-8ea7-482c-ab74-7aee445ea445%2Fthumbnails%2Fbukichi.jpg',
                 },
                 color: 0x1bc2a5,
                 fields: [{
-                    name: 'ボイスチャンネルにブキチを参加',
+                    name: 'ボイスチャンネルにSheldonを参加',
                     value: '```' + prefix + 'join```\n',
                 },
                 {
@@ -50,7 +50,7 @@ module.exports = async function handleHelp(msg) {
         msg.channel.send('', {
             embed: {
                 author: {
-                    name: 'ブキチの使い方',
+                    name: 'Sheldonの使い方',
                     icon_url: 'https://cdn.glitch.com/4ea6ca87-8ea7-482c-ab74-7aee445ea445%2Fthumbnails%2Fbukichi.jpg',
                 },
                 color: 0x1bc2a5,

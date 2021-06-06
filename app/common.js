@@ -1,27 +1,27 @@
 module.exports = {
-  isInteger: isInteger,
-  getGachi: getGachi,
-  getLeague: getLeague,
-  unixTime2hm: unixTime2hm,
-  unixTime2mdwhm: unixTime2mdwhm,
-  rule2txt: rule2txt,
-  stage2txt: stage2txt,
-  coop_stage2txt: coop_stage2txt,
-  weapon2txt: weapon2txt,
-  rgbToHex: rgbToHex,
-  random: randomSelect,
-  getPrefix: getPrefix
+    isInteger: isInteger,
+    getGachi: getGachi,
+    getLeague: getLeague,
+    unixTime2hm: unixTime2hm,
+    unixTime2mdwhm: unixTime2mdwhm,
+    rule2txt: rule2txt,
+    stage2txt: stage2txt,
+    coop_stage2txt: coop_stage2txt,
+    weapon2txt: weapon2txt,
+    rgbToHex: rgbToHex,
+    random: randomSelect,
+    getPrefix: getPrefix
 }
 const getPrefixes = require('../db/prefixes_select.js');
 const DEFAULT_PREFIX = '!!';
 
-function rgbToHex (r, g, b){
-  [r, g, b]
-    .map(x => {
-        const hex = x.toString(16);
-        return hex.length === 1 ? '0' + hex : hex;
-    })
-    .join('');
+function rgbToHex(r, g, b) {
+    [r, g, b]
+        .map(x => {
+            const hex = x.toString(16);
+            return hex.length === 1 ? '0' + hex : hex;
+        })
+        .join('');
 }
 
 function unixTime2hm(intTime) {
@@ -434,7 +434,8 @@ function randomSelect(array, num) {
     return r;
 };
 
-async function getPrefix(serverId) {
+async function getPrefix(msg) {
+    const serverId = msg.channel.type == 'dm' ? msg.channel.id : msg.guild.id;
     let prefix = DEFAULT_PREFIX;
     const serverPrefix = await getPrefixes(serverId);
     if (serverPrefix[0] != null) {

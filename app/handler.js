@@ -22,8 +22,7 @@ module.exports = {
 async function call(msg) {
   var strCmd = msg.content.replace(/　/g, " ");
   const args = strCmd.split(" ");
-  const prefixSeverId = msg.channel.type == 'dm' ? msg.channel.id : msg.guild.id;
-  const prefix = await common.getPrefix(prefixSeverId);
+  const prefix = await common.getPrefix(msg);
   const command = args.shift().toLowerCase();  
 
   switch (command) {

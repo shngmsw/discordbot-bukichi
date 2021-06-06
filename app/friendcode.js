@@ -1,11 +1,14 @@
 const insert = require("../db/fc_insert.js");
 const getFC = require("../db/fc_select.js");
 const Discord = require("discord.js");
+const common = require("./common.js");
 
-module.exports = function handleFriendCode(msg) {
-    if (msg.content.startsWith("fcadd")) {
+
+module.exports = async function handleFriendCode(msg) {
+    const prefix = await common.getPrefix(msg);
+    if (msg.content.startsWith(`${prefix}fcadd`)) {
         insertFriendCode(msg);
-    } else if (msg.content.startsWith("fc")) {
+    } else if (msg.content.startsWith(`${prefix}fc`)) {
         selectFriendCode(msg);
     }
 }
