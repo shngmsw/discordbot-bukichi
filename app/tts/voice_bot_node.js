@@ -20,6 +20,12 @@ const voiceLists1 = {
 const modeList1 = {
     1: 'HOYA VoiceText API'
 };
+const pitchList = [
+    70, 80, 90, 100, 110, 120, 130, 140, 150, 160
+];
+const speedList = [
+    75, 80, 90, 100, 110, 120, 130, 140, 150, 155
+];
 let context;
 let discordToken = null;
 let voiceTextApiKey = null;
@@ -34,7 +40,6 @@ let speed = 100;
 let pitch = 100;
 const timeoutOffset = 5;
 let timeout = timeoutOffset;
-
 const readConfig = () => {
     //discordToken = config.get('Api.discordToken');
     discordToken = process.env.DISCORD_BOT_TOKEN;
@@ -155,6 +160,14 @@ async function main(message) {
         stream.push(null);
         return stream;
     };
+
+    const voiceSettingByUserId = (userid) => {
+        // 395236707668328448
+        let selectPitch = userid.substring(17, 1);
+        let selectSpeed = userid.substring(16, 1);
+        pitch = pitchList[selectPitch];
+        speed = speedList[selectSpeed];
+    }
 
     if (message.content === `${prefix}join`) {
         if (message.member.voice.channel) {
@@ -298,6 +311,9 @@ async function main(message) {
     if (!(isBot() || isBlackListsFromID(message.member.id) || isBlackListsFromPrefixes(message.content))
         && isRead(message.channel.id) && isNotEmpty(yomiage_message) && isNotLengthOver(yomiage_message)) {
         try {
+
+            // ユーザーによって音声変える
+            voiceSettingByUserId(message.author.id);
             yomiage({
                 message: yomiage_message,
                 cons: context
