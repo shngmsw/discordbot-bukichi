@@ -307,10 +307,12 @@ async function main(message) {
             // ユーザーによって音声変える
             let selectPitch = message.author.id.substring(17, 1);
             let selectSpeed = message.author.id.substring(16, 1);
+            console.log(`${selectPitch}, ${selectSpeed}`);
+            console.log(`${pitchList}, ${speedList}`);
             pitch = pitchList[selectPitch];
             speed = speedList[selectSpeed];
             console.log(message.author.id);
-            console.log(`${pitch}, ${speed}`);
+            console.log(`${pitchList[selectPitch]}, ${speedList[selectSpeed]}`);
             yomiage({
                 message: yomiage_message,
                 cons: context
