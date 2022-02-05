@@ -161,16 +161,6 @@ async function main(message) {
         return stream;
     };
 
-    const voiceSettingByUserId = (userid) => {
-        // 395236707668328448
-        let selectPitch = userid.substring(17, 1);
-        let selectSpeed = userid.substring(16, 1);
-        pitch = pitchList[selectPitch];
-        speed = speedList[selectSpeed];
-        console.log(userid);
-        console.log(`${pitch},${speed}`);
-    }
-
     if (message.content === `${prefix}join`) {
         if (message.member.voice.channel) {
             if (!context || (context && context.status === 4)) {
@@ -315,7 +305,10 @@ async function main(message) {
         try {
 
             // ユーザーによって音声変える
-            voiceSettingByUserId(message.author.id);
+            let selectPitch = message.author.id.substring(17, 1);
+            let selectSpeed = message.author.id.substring(16, 1);
+            pitch = pitchList[selectPitch];
+            speed = speedList[selectSpeed];
             yomiage({
                 message: yomiage_message,
                 cons: context
