@@ -305,8 +305,8 @@ async function main(message) {
         try {
 
             // ユーザーによって音声変える
-            let selectPitch = message.author.id.substring(17, 1);
-            let selectSpeed = message.author.id.substring(16, 1);
+            let selectPitch = message.author.id.substr(17, 1);
+            let selectSpeed = message.author.id.substr(16, 1);
             console.log(`${selectPitch}, ${selectSpeed}`);
             console.log(`${pitchList}, ${speedList}`);
             pitch = pitchList[selectPitch];
