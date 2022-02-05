@@ -167,6 +167,8 @@ async function main(message) {
         let selectSpeed = userid.substring(16, 1);
         pitch = pitchList[selectPitch];
         speed = speedList[selectSpeed];
+        console.log(userid);
+        console.log(`${pitch},${speed}`);
     }
 
     if (message.content === `${prefix}join`) {
