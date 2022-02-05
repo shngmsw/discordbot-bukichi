@@ -309,6 +309,8 @@ async function main(message) {
             let selectSpeed = message.author.id.substring(16, 1);
             pitch = pitchList[selectPitch];
             speed = speedList[selectSpeed];
+            console.log(message.author.id);
+            console.log(`${pitch}, ${speed}`);
             yomiage({
                 message: yomiage_message,
                 cons: context
