@@ -1,11 +1,10 @@
-const common = require("./common.js");
+const common = require("../../common.js");
 
 module.exports = async function handleHelp(msg) {
     var strCmd = msg.content.replace(/　/g, ' ');
     strCmd = strCmd.replace('  ', ' ');
     const args = strCmd.split(' ');
-    const prefix = await common.getPrefix(msg);
-    const helpValuePrefix = prefix + "prefix [newPrefix]";
+    const prefix = '/';
     args.shift();
     if (args[0] == 'voice') {
         msg.channel.send('', {

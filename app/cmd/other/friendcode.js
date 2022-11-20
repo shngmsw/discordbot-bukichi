@@ -1,7 +1,7 @@
-const insert = require("../db/fc_insert.js");
-const getFC = require("../db/fc_select.js");
+const insert = require("../../../db/fc_insert.js");
+const getFC = require("../../../db/fc_select.js");
 const Discord = require("discord.js");
-const common = require("./common.js");
+const common = require("../../common.js");
 
 
 module.exports = async function handleFriendCode(msg) {
