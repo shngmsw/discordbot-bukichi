@@ -1,3 +1,5 @@
 node_modules/*
 launch.json
 .env
+.history/*
+sheldon.sqlite3

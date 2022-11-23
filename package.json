@@ -10,25 +10,32 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "@discordjs/opus": "^0.3.2",
-    "config": "^3.3.2",
-    "config-reloadable": "^1.0.8",
+    "@discordjs/opus": "^0.8.0",
+    "@discordjs/voice": "^0.13.0",
+    "canvas": "^2.9.1",
+    "config": "^3.3.7",
+    "config-reloadable": "^1.0.9",
+    "crypto-js": "^4.1.1",
     "data-utils": "0.0.2",
     "date-utils": "^1.2.21",
-    "discord.js": "^12.5.1",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "ffmpeg-static": "^4.2.7",
-    "js-combinatorics": "^0.5.5",
-    "opusscript": "^0.0.7",
-    "pg": "^8.4.1",
+    "discord-api-types": "^0.34.0",
+    "discord.js": "^14.5.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.1",
+    "ffmpeg-static": "^5.0.0",
+    "js-combinatorics": "^1.5.6",
+    "libsodium-wrappers": "^0.7.10",
+    "log4js": "^6.7.0",
+    "opusscript": "^0.0.8",
+    "pg": "^8.7.3",
     "request": "^2.88.2",
+    "sqlite3": "^5.1.2",
     "voice-text": "^0.1.2",
-    "wikijs": "^6.0.1",
-    "ytdl-core": "^3.4.1"
+    "wikijs": "^6.3.3",
+    "ytdl-core": "^4.11.0"
   },
   "engines": {
-    "node": "12.x"
+    "node": "16.13.0"
   },
   "repository": {
     "url": "https://github.com/shngmsw/discordbot-bukichi.git"
@@ -38,5 +45,17 @@
     "node",
     "glitch",
     "express"
-  ]
+  ],
+  "compilerOptions": {
+    "lib": [
+      "es2020.string"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "^8.15.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.6.2"
+  }
 }
