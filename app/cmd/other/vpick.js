@@ -1,13 +1,18 @@
-module.exports = function handleVoicePick(msg) {
+module.exports = async function handleVoicePick(interaction) {
+    if (!interaction.isCommand()) return;
+    // 'インタラクションに失敗'が出ないようにするため
+    await interaction.deferReply();
+
+    const { options } = interaction;
     // 発言したヒトが接続してるボイチャから数字分のヒトをランダム抽出
     // 数字なしの場合は１人をランダム抽出
-    var strCmd = msg.content.replace(/　/g, " ");
-    const args = strCmd.split(" ");
-    args.shift();
-    var kazu = Number(args[0]);
+
+    var kazu = Number(options.getInteger('ピックする人数'));
+    let user = '';
     if (kazu) {
-        msg.channel.send(msg.member.voice.channel.members.random(kazu));
+        user = interaction.member.voice.channel.members.random(kazu);
     } else {
-        msg.channel.send(msg.member.voice.channel.members.random(1));
+        user = interaction.member.voice.channel.members.random(1);
     }
-}
+    await interaction.editReply({ content: `${user}` });
+};

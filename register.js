@@ -12,9 +12,7 @@ const friendCode = new SlashCommandBuilder()
             .setDescription('フレンドコードを登録します。')
             .addStringOption((option) => option.setName('フレンドコード').setDescription('例：SW-0000-0000-0000').setRequired(true)),
     )
-    .addSubcommand((subcommand) =>
-        subcommand.setName('show').setDescription('登録したフレンドコードを表示します。未登録の場合は自己紹介から引用します。'),
-    );
+    .addSubcommand((subcommand) => subcommand.setName('show').setDescription('登録したフレンドコードを表示します。'));
 
 const wiki = new SlashCommandBuilder()
     .setName(commandNames.wiki)
@@ -81,13 +79,7 @@ const show = new SlashCommandBuilder()
     .addSubcommand((subcommand) => subcommand.setName('nawabari').setDescription('現在のナワバリステージ情報を表示'))
     .addSubcommand((subcommand) => subcommand.setName('run').setDescription('現在のシフトを表示'));
 
-const help = new SlashCommandBuilder()
-    .setName(commandNames.help)
-    .setDescription('ヘルプを表示します。')
-    .addSubcommand((subcommand) => subcommand.setName('recruit').setDescription('募集コマンドの使い方を表示'))
-    .addSubcommand((subcommand) => subcommand.setName('voice').setDescription('読み上げ機能のヘルプを表示'))
-
-
+const help = new SlashCommandBuilder().setName(commandNames.help).setDescription('ヘルプを表示します。');
 
 const voice = new SlashCommandBuilder()
     .setName(commandNames.voice)
@@ -114,29 +106,17 @@ const voice = new SlashCommandBuilder()
     )
     .addSubcommand((subcommand) => subcommand.setName('kill').setDescription('読み上げを終了'));
 
-
-const commands = [
-    friendCode,
-    wiki,
-    kansen,
-    minutesTimer,
-    pick,
-    vpick,
-    buki,
-    show,
-    help,
-    voice,
-];
+const commands = [friendCode, wiki, kansen, minutesTimer, pick, vpick, buki, show, help, voice];
 
 //登録用関数
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v10');
 const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_BOT_TOKEN);
 module.exports = async function registerSlashCommands() {
-    if (mode === 'global') {
-        await rest
-            .put(Routes.applicationCommands(process.env.DISCORD_BOT_ID), { body: commands })
-            .then(() => console.log('Successfully registered application global commands.'))
-            .catch(console.error);
-    }
+    await rest
+        .put(Routes.applicationCommands(process.env.DISCORD_BOT_ID), {
+            body: commands,
+        })
+        .then(() => console.log('Successfully registered application global commands.'))
+        .catch(console.error);
 };

@@ -1,9 +1,9 @@
-const Discord = require("discord.js");
-const regexDiscrdMessageUrl = 'https://(ptb.|canary.)?discord(app)?.com/channels/' +
-    '(?<guild>[0-9]{18})/(?<channel>[0-9]{18})/(?<message>[0-9]{18})'
+const Discord = require('discord.js');
+const regexDiscrdMessageUrl =
+    'https://(ptb.|canary.)?discord(app)?.com/channels/' + '(?<guild>[0-9]{18})/(?<channel>[0-9]{18})/(?<message>[0-9]{18})';
 
 module.exports = {
-    dispand: dispand
+    dispand: dispand,
 };
 
 async function dispand(message) {
@@ -13,7 +13,7 @@ async function dispand(message) {
             await message.channel.send(composeEmbed(messages[m]));
         }
         for (var embed in messages[m].embeds) {
-            await message.channel.send(messages[m].embeds[embed])
+            await message.channel.send(messages[m].embeds[embed]);
         }
     }
 }
@@ -34,7 +34,7 @@ async function extractMessages(message) {
 }
 
 async function fetchMessageFromId(guild, chId, msgId) {
-    let channel = guild.channels.cache.find(channel => channel.id === chId);
+    let channel = guild.channels.cache.find((channel) => channel.id === chId);
     return channel.messages.fetch(msgId);
 }
 
@@ -42,14 +42,8 @@ function composeEmbed(message) {
     const embed = new Discord.MessageEmbed();
     embed.setDescription(message.content);
     embed.setTimestamp(message.createdAt);
-    embed.setAuthor(
-        name = message.author.username,
-        iconURL = message.author.avatarURL()
-    );
-    embed.setFooter(
-        text = message.channel.name,
-        iconURL = message.guild.iconURL()
-    );
+    embed.setAuthor((name = message.author.username), (iconURL = message.author.avatarURL()));
+    embed.setFooter((text = message.channel.name), (iconURL = message.guild.iconURL()));
     if (message.attachments.size > 0 && message.attachments[0].proxyURL) {
         embed.setImage(message.message.attachments[0].proxyURL);
     }

@@ -1,55 +1,74 @@
-const insert = require("../../../db/fc_insert.js");
-const getFC = require("../../../db/fc_select.js");
-const Discord = require("discord.js");
-const common = require("../../common.js");
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
+const FriendCodeService = require('../../../db/friend_code_service.js');
+const { searchMemberById } = require('../../manager/memberManager.js');
+const log4js = require('log4js');
 
+log4js.configure(process.env.LOG4JS_CONFIG_PATH);
+const logger = log4js.getLogger();
 
-module.exports = async function handleFriendCode(msg) {
-    const prefix = await common.getPrefix(msg);
-    if (msg.content.startsWith(`${prefix}fcadd`)) {
-        insertFriendCode(msg);
-    } else if (msg.content.startsWith(`${prefix}fc`)) {
-        selectFriendCode(msg);
+module.exports = {
+    handleFriendCode: _handleFriendCode,
+    deleteFriendCode: _deleteFriendCode,
+};
+
+async function _handleFriendCode(interaction) {
+    if (!interaction.isCommand()) return;
+    // 'インタラクションに失敗'が出ないようにするため
+    await interaction.deferReply({ ephemeral: false });
+    // friend_codeテーブルがなければ作る
+    await FriendCodeService.createTableIfNotExists();
+
+    const options = interaction.options;
+    const subCommand = options.getSubcommand();
+    if (subCommand === 'add') {
+        insertFriendCode(interaction);
+    } else if (subCommand === 'show') {
+        selectFriendCode(interaction);
     }
 }
 
-async function selectFriendCode(msg) {
-    var strCmd = msg.content.replace(/　/g, " ");
-    const args = strCmd.split(" ");
-    args.shift();
-    // let id = args[0].replace('<@', '').replace('>','');
-    let id = msg.mentions.users.first().id;
-    let fc = await getFC(id, msg, args[0]);
+async function selectFriendCode(interaction) {
+    const guild = await interaction.guild.fetch();
+    let targetUser = await searchMemberById(guild, interaction.member.user.id);
+    let id = interaction.member.user.id;
+
+    let fc = await FriendCodeService.getFriendCodeByUserId(id);
     if (fc[0] != null) {
-        console.log("getFC:" + fc[0].code);
-        msg.channel.send(composeEmbed(msg.mentions.users.first(), fc[0].code, true));
+        await interaction.editReply({
+            embeds: [composeEmbed(targetUser, fc[0].code)],
+            ephemeral: false,
+        });
         return;
+    } else {
+        await interaction.editReply({
+            content: '未登録みたいでし！`/friend_code add`でコードを登録してみるでし！',
+            ephemeral: true,
+        });
     }
 }
 
-function composeEmbed(users, fc, isDatabase) {
-    const embed = new Discord.MessageEmbed();
+function composeEmbed(users, fc) {
+    const embed = new EmbedBuilder();
     embed.setDescription(fc);
-    embed.setAuthor(
-        name = users.username,
-        iconURL = users.avatarURL()
-    );
-    if (!isDatabase) {
-        embed.setFooter(
-            text = "自己紹介チャンネルより引用"
-        );
-    }
+    embed.setAuthor({
+        name: users.displayName,
+        iconURL: users.displayAvatarURL(),
+    });
     return embed;
 }
 
-async function insertFriendCode(msg) {
-    var strCmd = msg.content.replace(/　/g, " ");
-    const args = strCmd.split(" ");
-    args.shift();
-    // let id = args[0].replace('<@', '').replace('>','');
-    let id = msg.author.id;
-    let code = args[0];
-    console.log("handle_fc:" + id + "/" + code);
-    insert(id, code);
-    msg.channel.send("覚えたでし！");
+async function insertFriendCode(interaction) {
+    let id = interaction.member.user.id;
+    const options = interaction.options;
+    const code = options.getString('フレンドコード');
+
+    await FriendCodeService.save(id, code);
+    await interaction.editReply({
+        content: `\`${code}\`で覚えたでし！変更したい場合はもう一度登録すると上書きされるでし！`,
+        ephemeral: true,
+    });
+}
+
+async function _deleteFriendCode(interaction) {
+    await interaction.message.delete();
 }

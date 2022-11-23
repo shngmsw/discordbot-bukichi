@@ -1,25 +1,30 @@
-const common = require("./common.js");
+const common = require('../../common');
 
-module.exports = function handleTimer(msg, args) {
-    var kazu = Number(args);
+module.exports = async function handleTimer(interaction) {
+    if (!interaction.isCommand()) return;
+    // 'インタラクションに失敗'が出ないようにするため
+    await interaction.deferReply();
+
+    const { options } = interaction;
+    var kazu = options.getInteger('分');
     var count = kazu;
     if (count <= 10 && count > 0 && common.isInteger(kazu)) {
-        msg.reply("タイマーを" + count + "分後にセットしたでし！");
-        var countdown = function () {
+        await interaction.editReply('タイマーを' + count + '分後にセットしたでし！');
+        var countdown = async function () {
             count--;
             if (count != 0) {
-                msg.reply("残り" + count + "分でし");
+                await interaction.editReply(`残り${count}分でし`);
             } else {
-                msg.reply("時間でし！");
+                await interaction.followUp(`<@${interaction.member.user.id}> 時間でし！`);
             }
         };
-        var id = setInterval(function () {
-            countdown();
+        var id = setInterval(async function () {
+            await countdown();
             if (count <= 0) {
                 clearInterval(id);
             }
         }, 60000);
     } else {
-        msg.reply("10分以内しか入力できないでし！正の整数以外もダメでし！");
+        await interaction.editReply('10分以内しか入力できないでし！');
     }
-}
+};
