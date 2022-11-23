@@ -33,6 +33,7 @@ const { commandNames } = require('../constant');
 const VOICE_API = require('./tts/voice_bot_node.js');
 client.login(process.env.DISCORD_BOT_TOKEN);
 
+const log4js = require('log4js');
 log4js.configure(process.env.LOG4JS_CONFIG_PATH);
 client.on('messageCreate', async (msg) => {
     await deleteToken(msg);
