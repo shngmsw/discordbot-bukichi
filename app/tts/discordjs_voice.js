@@ -52,7 +52,7 @@ const join = async (interaction) => {
         });
         subscriptions.set(guildId, subscription);
         channels.set(guildId, channelId);
-        await interaction.followUp('ボイスチャンネルに接続したでし！`/help voice`で使い方を説明するでし！');
+        await interaction.followUp('ボイスチャンネルに接続したでし！`/help`で使い方を確認できるでし！');
     } else if (channels.get(guildId) === channelId) {
         await interaction.followUp('既に接続済みでし！');
     } else {
