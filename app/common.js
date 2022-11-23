@@ -14,12 +14,42 @@ module.exports = {
     sp3coop_stage2txt: sp3coop_stage2txt,
     rgbToHex: rgbToHex,
     random: randomSelect,
+    composeEmbed: composeEmbed,
     getPrefix: getPrefix,
     isEmpty: isEmpty,
     isNotEmpty: isNotEmpty,
 };
+const { EmbedBuilder } = require('discord.js');
+const { searchMemberById } = require('./manager/memberManager.js');
 const PrefixesService = require('../db/prefixes_service.js');
 const DEFAULT_PREFIX = '!!';
+
+async function composeEmbed(message, url) {
+    const embed = new EmbedBuilder();
+    if (isNotEmpty(message.content)) {
+        embed.setDescription(message.content);
+    }
+    embed.setTimestamp(message.createdAt);
+    const member = await searchMemberById(message.guild, message.author.id);
+    if (isNotEmpty(url)) {
+        embed.setTitle('引用元へジャンプ');
+        embed.setURL(url);
+    }
+    embed.setAuthor({
+        name: member.displayName,
+        iconURL: member.displayAvatarURL(),
+    });
+    embed.setFooter({
+        text: message.channel.name,
+        iconURL: message.guild.iconURL(),
+    });
+    if (message.attachments.size > 0) {
+        message.attachments.forEach((Attachment) => {
+            embed.setImage(Attachment.proxyURL);
+        });
+    }
+    return embed;
+}
 
 function rgbToHex(r, g, b) {
     [r, g, b]
