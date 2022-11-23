@@ -33,6 +33,7 @@ const { commandNames } = require('../constant');
 const VOICE_API = require('./tts/voice_bot_node.js');
 client.login(process.env.DISCORD_BOT_TOKEN);
 
+log4js.configure(process.env.LOG4JS_CONFIG_PATH);
 client.on('messageCreate', async (msg) => {
     await deleteToken(msg);
     Handler.call(msg);
@@ -40,34 +41,10 @@ client.on('messageCreate', async (msg) => {
     DISCORD_VOICE.play(msg);
 });
 
-client.on('guildMemberAdd', async (member) => {
-    const guild = await member.guild.fetch();
-    if (guild.id === process.env.SERVER_ID) {
-        client.user.setActivity(`${guild.memberCount}人`, {
-            type: ActivityType.Playing,
-        });
-    }
-});
-
-client.on('guildMemberRemove', async (member) => {
-    try {
-        const guild = await member.guild.fetch();
-        if (guild.id === process.env.SERVER_ID) {
-            client.user.setActivity(`${guild.memberCount}人`, {
-                type: ActivityType.Playing,
-            });
-        }
-    } catch (err) {
-        console.log('guildMemberRemove');
-        console.log({ err });
-    }
-});
-
 client.on('ready', async () => {
     console.log(`Logged in as ${client.user.tag}!`);
     await registerSlashCommands();
-    const guild = client.user.client.guilds.cache.get(process.env.SERVER_ID);
-    client.user.setActivity(`${guild.memberCount}人`, { type: ActivityType.Playing });
+    client.user.setActivity(`Sheldon`, { type: ActivityType.Playing });
 });
 
 /**
