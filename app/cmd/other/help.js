@@ -15,7 +15,7 @@ module.exports = async function handleHelp(interaction) {
                 .addFields([
                     {
                         name: '/voice join',
-                        value: '```ボイスチャンネルにブキチを参加```',
+                        value: '```ボイスチャンネルにSheldonを参加```',
                         inline: true,
                     },
                     {
@@ -25,7 +25,7 @@ module.exports = async function handleHelp(interaction) {
                     },
                     {
                         name: '/voice kill',
-                        value: '```ボイスチャンネルからブキチを切断```',
+                        value: '```ボイスチャンネルからSheldonを切断```',
                         inline: true,
                     },
                     {
