@@ -171,7 +171,6 @@ module.exports = async function handleShow(interaction) {
                         name: 'weapons.png',
                         description: '',
                     });
-                    let stageImage = coopSetting.coopStage.thumbnailImage.url;
 
                     const salmonEmbed = new EmbedBuilder()
                         .setAuthor({
@@ -184,7 +183,7 @@ module.exports = async function handleShow(interaction) {
                             name: 'ステージ',
                             value: coop_stage,
                         })
-                        .setImage(stageImage)
+                        .setImage('attachment://weapons.png')
                         .setThumbnail('https://raw.githubusercontent.com/shngmsw/ikabu/main/images/recruit/salmon_black_icon.png');
 
                     await interaction.channel.send({
