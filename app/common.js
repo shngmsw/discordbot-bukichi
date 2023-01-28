@@ -11,7 +11,7 @@ module.exports = {
     sp3unixTime2ymdw: sp3unixTime2ymdw,
     sp3rule2txt: sp3rule2txt,
     sp3stage2txt: sp3stage2txt,
-    sp3coop_stage2txt: sp3coop_stage2txt,
+    stage2txt: stage2txt,
     rgbToHex: rgbToHex,
     random: randomSelect,
     composeEmbed: composeEmbed,
@@ -181,39 +181,37 @@ function sp3stage2txt(key) {
     }
 }
 
-function sp3coop_stage2txt(key) {
-    switch (key) {
-        // case 0:
-        //     return '';
-        case 1:
-            return 'シェケナダム';
-        case 2:
-            return 'アラマキ砦';
-        // case 3:
-        //     return '';
-        // case 4:
-        //     return '';
-        // case 5:
-        //     return '';
-        // case 6:
-        //     return '';
-        case 7:
-            return 'ムニ・エール海洋発電所';
-        // case 8:
-        //     return '';
-        default:
+/**
+ * localeをもとにIDをステージ名に変換
+ * @param {*} locale ロケールデータ
+ * @param {*} id 変換するID
+ * @returns ステージ名
+ */
+async function stage2txt(locale, id) {
+    try {
+        const stages = locale.stages;
+        if (isEmpty(stages[id])) {
             return 'そーりー・あんでふぁいんど';
+        } else {
+            return stages[id].name;
+        }
+    } catch (error) {
+        console.error(error);
     }
 }
 
-function getLeague(data, x) {
+async function getLeague(data, x) {
     let stage;
     let date;
     let rule;
     let rstr;
     date = unixTime2mdwhm(data.league[x].start_time) + ' – ' + unixTime2hm(data.league[x].end_time);
     rule = rule2txt(data.league[x].rule.key);
-    stage = stage2txt(data.league[x].stage_a.id) + '\n' + stage2txt(data.league[x].stage_b.id) + '\n';
+    stage =
+        (await stage2txt(data.locale, data.league[x].vsStages[0].id)) +
+        '\n' +
+        (await stage2txt(data.locale, data.league[x].vsStages[0].id)) +
+        '\n';
     rstr = date + ',' + rule + ',' + stage;
     console.log(rstr);
     return rstr;

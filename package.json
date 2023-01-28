@@ -16,6 +16,8 @@
     "config": "^3.3.7",
     "config-reloadable": "^1.0.9",
     "crypto-js": "^4.1.1",
+    "date-fns": "^2.29.3",
+    "date-fns-tz": "^1.3.7",
     "data-utils": "0.0.2",
     "date-utils": "^1.2.21",
     "discord-api-types": "^0.34.0",
